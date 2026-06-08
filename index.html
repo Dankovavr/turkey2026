@@ -6,19 +6,10 @@
 <title>🇹🇷 Turkey 2026 — Чекліст</title>
 <style>
   :root {
-    --bg: #0f1117;
-    --bg2: #1a1d27;
-    --bg3: #242736;
-    --border: #2e3147;
-    --accent: #4f8ef7;
-    --green: #22c55e;
-    --text: #e2e8f0;
-    --muted: #8892a4;
-    --danger: #f87171;
-    --info-bg: #1e3a5f;
-    --info-border: #3b82f6;
-    --radius: 10px;
-    --font: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    --bg: #0f1117; --bg2: #1a1d27; --bg3: #242736; --border: #2e3147;
+    --accent: #4f8ef7; --green: #22c55e; --text: #e2e8f0; --muted: #8892a4;
+    --danger: #f87171; --info-bg: #1e3a5f; --info-border: #3b82f6;
+    --radius: 10px; --font: 'Segoe UI', system-ui, -apple-system, sans-serif;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { background: var(--bg); color: var(--text); font-family: var(--font); min-height: 100vh; }
@@ -35,17 +26,14 @@
   header p { font-size: 13px; color: var(--muted); margin-top: 2px; }
 
   .sync-dot {
-    width: 8px; height: 8px; border-radius: 50%;
-    background: var(--muted); flex-shrink: 0;
-    transition: background 0.4s;
-    position: relative;
+    width: 8px; height: 8px; border-radius: 50%; background: var(--muted);
+    flex-shrink: 0; transition: background 0.4s; position: relative;
   }
   .sync-dot.online { background: var(--green); }
   .sync-dot.saving { background: #facc15; }
   .sync-dot.online::after {
     content: ''; position: absolute; inset: -3px; border-radius: 50%;
-    border: 1.5px solid var(--green); opacity: 0.5;
-    animation: pulse 2s infinite;
+    border: 1.5px solid var(--green); opacity: 0.5; animation: pulse 2s infinite;
   }
   @keyframes pulse { 0%,100%{transform:scale(1);opacity:.5} 50%{transform:scale(1.6);opacity:0} }
 
@@ -72,17 +60,15 @@
     font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase;
     letter-spacing: 0.08em; padding: 16px 0 8px; border-bottom: 1px solid var(--border); margin-bottom: 4px;
   }
-
   .item {
     display: flex; align-items: center; gap: 10px;
-    padding: 10px 12px; border-radius: var(--radius);
-    cursor: pointer; transition: background 0.1s;
+    padding: 10px 12px; border-radius: var(--radius); cursor: pointer; transition: background 0.1s;
   }
   .item:hover { background: var(--bg2); }
   .checkbox {
     width: 18px; height: 18px; border-radius: 5px; border: 2px solid var(--border);
     flex-shrink: 0; display: flex; align-items: center; justify-content: center;
-    transition: all 0.15s; background: var(--bg2); position: relative;
+    transition: all 0.15s; background: var(--bg2);
   }
   .item.done .checkbox { background: var(--green); border-color: var(--green); }
   .checkbox::after {
@@ -95,8 +81,7 @@
   .item.done label { text-decoration: line-through; color: var(--muted); }
   .del-btn {
     opacity: 0; font-size: 18px; color: var(--muted); cursor: pointer;
-    padding: 0 4px; border: none; background: none; line-height: 1;
-    transition: opacity 0.15s; flex-shrink: 0;
+    padding: 0 4px; border: none; background: none; line-height: 1; flex-shrink: 0;
   }
   .item:hover .del-btn { opacity: 1; }
   .del-btn:hover { color: var(--danger); }
@@ -104,8 +89,7 @@
   .add-row { display: flex; gap: 8px; margin-top: 16px; padding-top: 12px; border-top: 1px solid var(--border); }
   .add-row select, .add-row input {
     font-size: 13px; padding: 8px 12px; border-radius: var(--radius);
-    border: 1px solid var(--border); background: var(--bg2); color: var(--text);
-    font-family: var(--font);
+    border: 1px solid var(--border); background: var(--bg2); color: var(--text); font-family: var(--font);
   }
   .add-row select { flex-shrink: 0; }
   .add-row input { flex: 1; }
@@ -121,19 +105,19 @@
   .tip {
     background: var(--info-bg); border-left: 3px solid var(--info-border);
     border-radius: 0 var(--radius) var(--radius) 0;
-    padding: 12px 16px; font-size: 14px; color: var(--text);
-    margin: 8px 0; line-height: 1.6;
+    padding: 12px 16px; font-size: 14px; color: var(--text); margin: 8px 0; line-height: 1.6;
   }
-
-  .loading {
-    display: flex; flex-direction: column; align-items: center; justify-content: center;
-    min-height: 200px; gap: 12px; color: var(--muted); font-size: 14px;
+  .error-box {
+    background: #2a1010; border-left: 3px solid var(--danger);
+    border-radius: 0 var(--radius) var(--radius) 0;
+    padding: 14px 16px; font-size: 14px; color: var(--text); margin: 16px 0; line-height: 1.6;
   }
-  .spinner {
-    width: 28px; height: 28px; border: 3px solid var(--border);
-    border-top-color: var(--accent); border-radius: 50%;
-    animation: spin 0.8s linear infinite;
+  .error-box button {
+    margin-top: 10px; padding: 6px 16px; border-radius: 8px; border: none;
+    background: var(--accent); color: #fff; cursor: pointer; font-size: 13px;
   }
+  .loading { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 180px; gap: 12px; color: var(--muted); font-size: 14px; }
+  .spinner { width: 28px; height: 28px; border: 3px solid var(--border); border-top-color: var(--accent); border-radius: 50%; animation: spin 0.8s linear infinite; }
   @keyframes spin { to { transform: rotate(360deg); } }
 
   @media (max-width: 500px) {
@@ -189,23 +173,10 @@
   <div id="tips"      class="section"></div>
 </div>
 
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 <script>
-firebase.initializeApp({
-  apiKey:            "AIzaSyD99xp0DRnt0t8KcPnj_1l7_kOB18omIQU",
-  authDomain:        "turkey2026-ecd71.firebaseapp.com",
-  databaseURL:       "https://turkey2026-ecd71-default-rtdb.europe-west1.firebasedatabase.app",
-  projectId:         "turkey2026-ecd71",
-  storageBucket:     "turkey2026-ecd71.firebasestorage.app",
-  messagingSenderId: "531211191900",
-  appId:             "1:531211191900:web:7ebb4b7965819d19848899"
-});
-
-const db       = firebase.database();
-const stateRef = db.ref('checklist');
-const connRef  = db.ref('.info/connected');
-const syncDot  = document.getElementById('sync-dot');
+// ─── Firebase REST (no SDK) ─────────────────────────────────────
+const DB = 'https://turkey2026-ecd71-default-rtdb.europe-west1.firebasedatabase.app/checklist.json';
+const syncDot = document.getElementById('sync-dot');
 
 // ─── Default data ───────────────────────────────────────────────
 const DEFAULT_DATA = {
@@ -321,104 +292,126 @@ function buildDefaultState() {
   return state;
 }
 
-// Firebase stores sparse arrays as objects — convert back
-function toArray(val) {
+function toArr(val) {
   if (!val) return [];
   if (Array.isArray(val)) return val;
   return Object.keys(val).sort((a, b) => +a - +b).map(k => val[k]);
 }
 
-function normalizeFromFirebase(raw) {
+function normalize(raw) {
   const state = { data: {}, checked: {} };
   for (const sec of SECTIONS) {
-    state.data[sec]    = {};
+    state.data[sec] = {};
     state.checked[sec] = {};
-    const d = raw.data?.[sec]    || {};
-    const c = raw.checked?.[sec] || {};
+    const d = (raw.data && raw.data[sec]) || {};
+    const c = (raw.checked && raw.checked[sec]) || {};
     for (const cat of Object.keys(d)) {
-      state.data[sec][cat]    = toArray(d[cat]).map(String);
-      state.checked[sec][cat] = toArray(c[cat] || []).map(Boolean);
+      state.data[sec][cat]    = toArr(d[cat]).map(String);
+      state.checked[sec][cat] = toArr(c[cat] || []).map(Boolean);
     }
   }
   return state;
 }
 
-// ─── Firebase sync ──────────────────────────────────────────────
-connRef.on('value', snap => {
-  syncDot.className = 'sync-dot' + (snap.val() ? ' online' : '');
-});
+// ─── Firebase REST + SSE ─────────────────────────────────────────
+let sse = null;
+let sseReconnectTimer = null;
 
-const loadTimeout = setTimeout(() => {
-  if (!appState) showError('Timeout: Firebase не відповідає. Перевірте інтернет або правила бази даних.');
-}, 12000);
+function connectSSE() {
+  if (sse) sse.close();
+  sse = new EventSource(DB);
 
-stateRef.on('value', snap => {
-  clearTimeout(loadTimeout);
-  const raw = snap.val();
-  if (!raw) {
-    appState = buildDefaultState();
-    stateRef.set(appState);
-  } else {
-    appState = normalizeFromFirebase(raw);
-  }
-  renderAll();
-}, err => {
-  clearTimeout(loadTimeout);
-  showError('Firebase помилка: ' + err.code + ' — ' + err.message);
-});
+  sse.addEventListener('put', function(e) {
+    clearTimeout(loadTimer);
+    var payload = JSON.parse(e.data);
+    var raw = payload.data;
+    if (!raw) {
+      appState = buildDefaultState();
+      saveState();
+    } else {
+      appState = normalize(raw);
+    }
+    renderAll();
+    syncDot.className = 'sync-dot online';
+  });
 
-function showError(msg) {
-  document.getElementById('docs').innerHTML =
-    `<div class="tip" style="border-color:var(--danger);background:#2a1010;margin-top:12px">
-      ⚠️ ${msg}
-      <br><br>
-      <button onclick="location.reload()" style="margin-top:8px;padding:6px 14px;border-radius:8px;border:none;background:var(--accent);color:#fff;cursor:pointer;font-size:13px">Оновити сторінку</button>
-    </div>`;
+  sse.addEventListener('cancel', function(e) {
+    clearTimeout(loadTimer);
+    showError('Firebase відхилив запит (' + e.data + '). Потрібно оновити правила бази даних.');
+  });
+
+  sse.onerror = function() {
+    syncDot.className = 'sync-dot';
+    clearTimeout(sseReconnectTimer);
+    sseReconnectTimer = setTimeout(connectSSE, 5000);
+  };
 }
+
+var loadTimer = setTimeout(function() {
+  if (!appState) {
+    showError('Не вдалося завантажити дані за 15 секунд. Перевірте правила Firebase або інтернет-з\'єднання.');
+  }
+}, 15000);
+
+connectSSE();
 
 function saveState() {
   syncDot.className = 'sync-dot saving';
-  stateRef.set(appState).then(() => {
+  fetch(DB, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(appState)
+  }).then(function(res) {
+    if (!res.ok) return res.text().then(function(t) { throw new Error(res.status + ': ' + t); });
     syncDot.className = 'sync-dot online';
-  }).catch(err => showError('Помилка збереження: ' + err.message));
+  }).catch(function(err) {
+    showError('Помилка збереження: ' + err.message);
+  });
+}
+
+// ─── UI helpers ─────────────────────────────────────────────────
+function showError(msg) {
+  document.getElementById('docs').innerHTML =
+    '<div class="error-box">⚠️ ' + msg +
+    '<br><button onclick="location.reload()">Оновити сторінку</button></div>';
+}
+
+function esc(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 
 // ─── Render ─────────────────────────────────────────────────────
 function render(secId) {
-  const el   = document.getElementById(secId);
-  const cats = appState.data[secId];
+  var el   = document.getElementById(secId);
+  var cats = appState.data[secId];
   if (!cats) return;
-
-  let html = '';
-  for (const cat of Object.keys(cats)) {
-    const items   = cats[cat];
-    const checked = appState.checked[secId][cat] || [];
-    html += `<div class="cat-header">${esc(cat)}</div>`;
-    items.forEach((text, i) => {
-      const uid  = `${secId}|||${encodeURIComponent(cat)}|||${i}`;
-      const done = checked[i] ? ' done' : '';
-      html += `<div class="item${done}" onclick="toggle('${uid}')">
-        <div class="checkbox"></div>
-        <label>${esc(text)}</label>
-        <button class="del-btn" onclick="event.stopPropagation();del('${uid}')" title="Видалити">×</button>
-      </div>`;
+  var html = '';
+  Object.keys(cats).forEach(function(cat) {
+    var items   = cats[cat];
+    var checked = appState.checked[secId][cat] || [];
+    html += '<div class="cat-header">' + esc(cat) + '</div>';
+    items.forEach(function(text, i) {
+      var uid  = secId + '|||' + encodeURIComponent(cat) + '|||' + i;
+      var done = checked[i] ? ' done' : '';
+      html += '<div class="item' + done + '" onclick="toggle(\'' + uid + '\')">' +
+        '<div class="checkbox"></div>' +
+        '<label>' + esc(text) + '</label>' +
+        '<button class="del-btn" onclick="event.stopPropagation();del(\'' + uid + '\')" title="Видалити">\xd7</button>' +
+        '</div>';
     });
-  }
-
-  const opts = Object.keys(cats).map(c => `<option value="${esc(c)}">${esc(c)}</option>`).join('');
-  html += `<div class="add-row">
-    <select id="sel-${secId}">${opts}</select>
-    <input id="inp-${secId}" type="text" placeholder="Додати пункт..."
-           onkeydown="if(event.key==='Enter')addItem('${secId}')">
-    <button onclick="addItem('${secId}')">+ Додати</button>
-  </div>`;
-
+  });
+  var opts = Object.keys(cats).map(function(c) { return '<option value="' + esc(c) + '">' + esc(c) + '</option>'; }).join('');
+  html += '<div class="add-row">' +
+    '<select id="sel-' + secId + '">' + opts + '</select>' +
+    '<input id="inp-' + secId + '" type="text" placeholder="Додати пункт..." onkeydown="if(event.key===\'Enter\')addItem(\'' + secId + '\')">' +
+    '<button onclick="addItem(\'' + secId + '\')">+ Додати</button>' +
+    '</div>';
   el.innerHTML = html;
 }
 
 function renderTips() {
   document.getElementById('tips').innerHTML =
-    TIPS.map(t => `<div class="tip">${t}</div>`).join('');
+    TIPS.map(function(t) { return '<div class="tip">' + t + '</div>'; }).join('');
 }
 
 function renderAll() {
@@ -427,11 +420,10 @@ function renderAll() {
   updateProgress();
 }
 
-// ─── Actions (exposed to window for onclick strings) ─────────────
+// ─── Actions ────────────────────────────────────────────────────
 window.toggle = function(uid) {
-  const [sec, catEnc, idx] = uid.split('|||');
-  const cat = decodeURIComponent(catEnc);
-  const i   = +idx;
+  var parts = uid.split('|||');
+  var sec = parts[0], cat = decodeURIComponent(parts[1]), i = +parts[2];
   appState.checked[sec][cat][i] = !appState.checked[sec][cat][i];
   render(sec);
   updateProgress();
@@ -439,9 +431,8 @@ window.toggle = function(uid) {
 };
 
 window.del = function(uid) {
-  const [sec, catEnc, idx] = uid.split('|||');
-  const cat = decodeURIComponent(catEnc);
-  const i   = +idx;
+  var parts = uid.split('|||');
+  var sec = parts[0], cat = decodeURIComponent(parts[1]), i = +parts[2];
   appState.data[sec][cat].splice(i, 1);
   appState.checked[sec][cat].splice(i, 1);
   render(sec);
@@ -450,11 +441,11 @@ window.del = function(uid) {
 };
 
 window.addItem = function(secId) {
-  const inp  = document.getElementById('inp-' + secId);
-  const sel  = document.getElementById('sel-' + secId);
-  const text = inp.value.trim();
+  var inp  = document.getElementById('inp-' + secId);
+  var sel  = document.getElementById('sel-' + secId);
+  var text = inp.value.trim();
   if (!text) { inp.focus(); return; }
-  const cat = sel.value;
+  var cat = sel.value;
   appState.data[secId][cat].push(text);
   appState.checked[secId][cat].push(false);
   inp.value = '';
@@ -465,10 +456,10 @@ window.addItem = function(secId) {
 };
 
 // ─── Tabs ───────────────────────────────────────────────────────
-document.querySelectorAll('.tab').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+document.querySelectorAll('.tab').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('.section').forEach(function(s) { s.classList.remove('active'); });
+    document.querySelectorAll('.tab').forEach(function(t) { t.classList.remove('active'); });
     document.getElementById(btn.dataset.section).classList.add('active');
     btn.classList.add('active');
   });
@@ -476,34 +467,31 @@ document.querySelectorAll('.tab').forEach(btn => {
 
 // ─── Progress ───────────────────────────────────────────────────
 function updateProgress() {
-  let total = 0, done = 0;
-  for (const sec of SECTIONS) {
-    for (const cat of Object.keys(appState.data[sec] || {})) {
+  var total = 0, done = 0;
+  SECTIONS.forEach(function(sec) {
+    Object.keys(appState.data[sec] || {}).forEach(function(cat) {
       total += appState.data[sec][cat].length;
-      done  += (appState.checked[sec]?.[cat] || []).filter(Boolean).length;
-    }
-  }
-  const pct = total ? Math.round(done / total * 100) : 0;
-  document.getElementById('prog-label').textContent = `Зібрано: ${done} / ${total}`;
-  document.getElementById('prog-pct').textContent   = `${pct}%`;
+      done  += (appState.checked[sec][cat] || []).filter(Boolean).length;
+    });
+  });
+  var pct = total ? Math.round(done / total * 100) : 0;
+  document.getElementById('prog-label').textContent = 'Зібрано: ' + done + ' / ' + total;
+  document.getElementById('prog-pct').textContent   = pct + '%';
   document.getElementById('prog-fill').style.width  = pct + '%';
 }
 
-// ─── Reset — Shift+click header ─────────────────────────────────
-document.querySelector('header').addEventListener('click', e => {
+// ─── Reset (Shift+click header) ─────────────────────────────────
+document.querySelector('header').addEventListener('click', function(e) {
   if (!e.shiftKey) return;
   if (!confirm('Скинути всі позначки? (список збережеться)')) return;
-  for (const sec of SECTIONS)
-    for (const cat of Object.keys(appState.checked[sec] || {}))
-      appState.checked[sec][cat] = appState.checked[sec][cat].map(() => false);
+  SECTIONS.forEach(function(sec) {
+    Object.keys(appState.checked[sec] || {}).forEach(function(cat) {
+      appState.checked[sec][cat] = appState.checked[sec][cat].map(function() { return false; });
+    });
+  });
   renderAll();
   saveState();
 });
-
-function esc(s) {
-  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-}
 </script>
 </body>
 </html>
-

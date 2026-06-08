@@ -189,12 +189,10 @@
   <div id="tips"      class="section"></div>
 </div>
 
-<script type="module">
-import { initializeApp }               from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
-import { getDatabase, ref, set, onValue } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js';
-
-// ─── Firebase ───────────────────────────────────────────────────
-const app = initializeApp({
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+<script>
+firebase.initializeApp({
   apiKey:            "AIzaSyD99xp0DRnt0t8KcPnj_1l7_kOB18omIQU",
   authDomain:        "turkey2026-ecd71.firebaseapp.com",
   databaseURL:       "https://turkey2026-ecd71-default-rtdb.europe-west1.firebasedatabase.app",
@@ -204,10 +202,10 @@ const app = initializeApp({
   appId:             "1:531211191900:web:7ebb4b7965819d19848899"
 });
 
-const db         = getDatabase(app);
-const stateRef   = ref(db, 'checklist');
-const connRef    = ref(db, '.info/connected');
-const syncDot    = document.getElementById('sync-dot');
+const db       = firebase.database();
+const stateRef = db.ref('checklist');
+const connRef  = db.ref('.info/connected');
+const syncDot  = document.getElementById('sync-dot');
 
 // ─── Default data ───────────────────────────────────────────────
 const DEFAULT_DATA = {
@@ -346,25 +344,24 @@ function normalizeFromFirebase(raw) {
 }
 
 // ─── Firebase sync ──────────────────────────────────────────────
-let isSaving = false;
-
-onValue(connRef, snap => {
+connRef.on('value', snap => {
   syncDot.className = 'sync-dot' + (snap.val() ? ' online' : '');
 });
 
-onValue(stateRef, snap => {
-  if (isSaving) return; // skip echo of our own write
+stateRef.on('value', snap => {
   const raw = snap.val();
-  appState = raw ? normalizeFromFirebase(raw) : buildDefaultState();
-  if (!raw) saveState(); // first load: seed DB
+  if (!raw) {
+    appState = buildDefaultState();
+    stateRef.set(appState);
+  } else {
+    appState = normalizeFromFirebase(raw);
+  }
   renderAll();
 });
 
 function saveState() {
-  isSaving = true;
   syncDot.className = 'sync-dot saving';
-  set(stateRef, appState).then(() => {
-    isSaving = false;
+  stateRef.set(appState).then(() => {
     syncDot.className = 'sync-dot online';
   });
 }
@@ -492,3 +489,4 @@ function esc(s) {
 </script>
 </body>
 </html>
+

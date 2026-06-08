@@ -348,7 +348,12 @@ connRef.on('value', snap => {
   syncDot.className = 'sync-dot' + (snap.val() ? ' online' : '');
 });
 
+const loadTimeout = setTimeout(() => {
+  if (!appState) showError('Timeout: Firebase не відповідає. Перевірте інтернет або правила бази даних.');
+}, 12000);
+
 stateRef.on('value', snap => {
+  clearTimeout(loadTimeout);
   const raw = snap.val();
   if (!raw) {
     appState = buildDefaultState();
@@ -357,13 +362,25 @@ stateRef.on('value', snap => {
     appState = normalizeFromFirebase(raw);
   }
   renderAll();
+}, err => {
+  clearTimeout(loadTimeout);
+  showError('Firebase помилка: ' + err.code + ' — ' + err.message);
 });
+
+function showError(msg) {
+  document.getElementById('docs').innerHTML =
+    `<div class="tip" style="border-color:var(--danger);background:#2a1010;margin-top:12px">
+      ⚠️ ${msg}
+      <br><br>
+      <button onclick="location.reload()" style="margin-top:8px;padding:6px 14px;border-radius:8px;border:none;background:var(--accent);color:#fff;cursor:pointer;font-size:13px">Оновити сторінку</button>
+    </div>`;
+}
 
 function saveState() {
   syncDot.className = 'sync-dot saving';
   stateRef.set(appState).then(() => {
     syncDot.className = 'sync-dot online';
-  });
+  }).catch(err => showError('Помилка збереження: ' + err.message));
 }
 
 // ─── Render ─────────────────────────────────────────────────────

@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🇹🇷 Turkey 2026 — Чекліст</title>
+<style>
+  :root {
+    --bg: #0f1117;
+    --bg2: #1a1d27;
+    --bg3: #242736;
+    --border: #2e3147;
+    --accent: #4f8ef7;
+    --green: #22c55e;
+    --text: #e2e8f0;
+    --muted: #8892a4;
+    --danger: #f87171;
+    --info-bg: #1e3a5f;
+    --info-border: #3b82f6;
+    --radius: 10px;
+    --font: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: var(--font); min-height: 100vh; }
+
+  /* ── Header ── */
+  header {
+    background: linear-gradient(135deg, #1a2a4a 0%, #0f1a35 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 20px 24px 16px;
+    display: flex; align-items: center; gap: 16px;
+  }
+  header .flag { font-size: 36px; }
+  header h1 { font-size: 20px; font-weight: 700; letter-spacing: -0.3px; }
+  header p { font-size: 13px; color: var(--muted); margin-top: 2px; }
+
+  /* ── Progress ── */
+  .progress-wrap { padding: 14px 24px 0; }
+  .progress-meta { display: flex; justify-content: space-between; font-size: 12px; color: var(--muted); margin-bottom: 6px; }
+  .progress-bar { height: 6px; background: var(--bg3); border-radius: 99px; overflow: hidden; }
+  .progress-fill { height: 100%; background: linear-gradient(90deg, #22c55e, #4ade80); border-radius: 99px; transition: width 0.4s ease; }
+
+  /* ── Tabs ── */
+  .tabs-wrap { padding: 16px 24px 0; overflow-x: auto; }
+  .tabs { display: flex; gap: 6px; min-width: max-content; }
+  .tab {
+    padding: 7px 14px; border-radius: 99px; border: 1px solid var(--border);
+    font-size: 13px; cursor: pointer; background: var(--bg2); color: var(--muted);
+    transition: all 0.15s; white-space: nowrap; font-family: var(--font);
+  }
+  .tab.active { background: var(--accent); color: #fff; border-color: var(--accent); font-weight: 600; }
+  .tab:hover:not(.active) { background: var(--bg3); color: var(--text); border-color: var(--border); }
+
+  /* ── Content ── */
+  .content { padding: 20px 24px 80px; max-width: 760px; }
+  .section { display: none; }
+  .section.active { display: block; }
+
+  .cat-header {
+    font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase;
+    letter-spacing: 0.08em; padding: 16px 0 8px; border-bottom: 1px solid var(--border); margin-bottom: 4px;
+  }
+
+  /* ── Item ── */
+  .item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px 12px; border-radius: var(--radius);
+    cursor: pointer; transition: background 0.1s; position: relative;
+  }
+  .item:hover { background: var(--bg2); }
+  .item input[type=checkbox] { display: none; }
+  .checkbox {
+    width: 18px; height: 18px; border-radius: 5px; border: 2px solid var(--border);
+    flex-shrink: 0; display: flex; align-items: center; justify-content: center;
+    transition: all 0.15s; background: var(--bg2);
+  }
+  .item.done .checkbox { background: var(--green); border-color: var(--green); }
+  .checkbox::after { content: ''; display: none; width: 5px; height: 9px; border: 2px solid #fff; border-top: none; border-left: none; transform: rotate(45deg) translate(-1px, -1px); }
+  .item.done .checkbox::after { display: block; }
+  .item label { font-size: 14px; color: var(--text); cursor: pointer; line-height: 1.45; flex: 1; }
+  .item.done label { text-decoration: line-through; color: var(--muted); }
+  .del-btn {
+    opacity: 0; font-size: 18px; color: var(--muted); cursor: pointer;
+    padding: 0 4px; border: none; background: none; line-height: 1;
+    transition: opacity 0.15s; flex-shrink: 0;
+  }
+  .item:hover .del-btn { opacity: 1; }
+  .del-btn:hover { color: var(--danger); }
+
+  /* ── Add row ── */
+  .add-row { display: flex; gap: 8px; margin-top: 16px; padding-top: 12px; border-top: 1px solid var(--border); }
+  .add-row select, .add-row input {
+    font-size: 13px; padding: 8px 12px; border-radius: var(--radius);
+    border: 1px solid var(--border); background: var(--bg2); color: var(--text);
+    font-family: var(--font);
+  }
+  .add-row select { flex-shrink: 0; }
+  .add-row input { flex: 1; }
+  .add-row input::placeholder { color: var(--muted); }
+  .add-row input:focus, .add-row select:focus { outline: none; border-color: var(--accent); }
+  .add-row button {
+    padding: 8px 16px; font-size: 13px; border-radius: var(--radius); border: 1px solid var(--accent);
+    cursor: pointer; background: var(--accent); color: #fff; font-weight: 600; white-space: nowrap;
+    font-family: var(--font); transition: opacity 0.15s;
+  }
+  .add-row button:hover { opacity: 0.85; }
+
+  /* ── Tips ── */
+  .tip {
+    background: var(--info-bg); border-left: 3px solid var(--info-border);
+    border-radius: 0 var(--radius) var(--radius) 0;
+    padding: 12px 16px; font-size: 14px; color: var(--text);
+    margin: 8px 0; line-height: 1.6;
+  }
+
+  /* ── Empty ── */
+  .empty { color: var(--muted); font-size: 13px; padding: 12px 12px; font-style: italic; }
+
+  /* ── Mobile ── */
+  @media (max-width: 500px) {
+    header { padding: 14px 16px 12px; }
+    .progress-wrap { padding: 12px 16px 0; }
+    .tabs-wrap { padding: 12px 16px 0; }
+    .content { padding: 16px 16px 80px; }
+    .add-row { flex-wrap: wrap; }
+    .add-row select { width: 100%; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="flag">🇹🇷</div>
+  <div>
+    <h1>Turkey 2026 — Чекліст</h1>
+    <p>Богдан · Соломія · Ромчик</p>
+  </div>
+</header>
+
+<div class="progress-wrap">
+  <div class="progress-meta">
+    <span id="prog-label">Зібрано: 0 / 0</span>
+    <span id="prog-pct">0%</span>
+  </div>
+  <div class="progress-bar"><div class="progress-fill" id="prog-fill" style="width:0%"></div></div>
+</div>
+
+<div class="tabs-wrap">
+  <div class="tabs">
+    <button class="tab active" data-section="docs">📋 Документи</button>
+    <button class="tab" data-section="clothes">👕 Одяг</button>
+    <button class="tab" data-section="cosmetics">🧴 Косметика</button>
+    <button class="tab" data-section="medicine">💊 Аптека</button>
+    <button class="tab" data-section="baby">👶 Ромчик</button>
+    <button class="tab" data-section="beach">🏖 Пляж</button>
+    <button class="tab" data-section="gadgets">📱 Техніка</button>
+    <button class="tab" data-section="tips">💡 Поради</button>
+  </div>
+</div>
+
+<div class="content">
+  <div id="docs"      class="section active"></div>
+  <div id="clothes"   class="section"></div>
+  <div id="cosmetics" class="section"></div>
+  <div id="medicine"  class="section"></div>
+  <div id="baby"      class="section"></div>
+  <div id="beach"     class="section"></div>
+  <div id="gadgets"   class="section"></div>
+  <div id="tips"      class="section"></div>
+</div>
+
+<script>
+// ─── Default data ───────────────────────────────────────────────
+const DEFAULT_DATA = {
+  docs: {
+    "Документи": [
+      "Закордонні паспорти (Богдан + Соломія)",
+      "Карти побуту (Богдан + Соломія)",
+      "Паспорт / свідоцтво про народження / Карта побуту Ромчик",
+      "Туристична страховка",
+      "Авіаквитки (роздруківки)",
+      "Підтвердження бронювання готелю",
+      "Готівка — євро або долари (+ турецькі ліри)",
+      "Банківські картки",
+      "Контакти страхової та туристичної компанії",
+      "Паркінг — роздрукований"
+    ]
+  },
+  clothes: {
+    "Богдан": [
+      "Джинси (летіти в них)",
+      "Кросівки (летіти в них)",
+      "Футболки (5 шт.)",
+      "Шорти (3–4 шт.)",
+      "Плавки (2 шт.)",
+      "Парадна футболка для вечері",
+      "Нижня білизна та шкарпетки",
+      "Легка куртка / вітровка (лишимо в машині)",
+      "Капці для готелю / пляжу (2 шт.)",
+      "Сонцезахисні окуляри",
+      "Кепка"
+    ],
+    "Соломія": [
+      "Купальники (3 шт.)",
+      "Легкі сукні або сарафани, футболки (6 шт.)",
+      "Шорти та топи (3–4 шт.)",
+      "Вечірня сукня (1 шт.)",
+      "Нижня білизна",
+      "Сандалі та зручне взуття",
+      "Парео / хустка для пляжу",
+      "Шляпа від сонця",
+      "Сонцезахисні окуляри"
+    ]
+  },
+  cosmetics: {
+    "Богдан": [
+      "Флюс у гаманець",
+      "Одноразова бритва",
+      "Гель для бриття",
+      "Пробник бальзаму після бриття",
+      "Антиперспірант",
+      "Зубна паста",
+      "Зубна щітка"
+    ],
+    "Соломія": [
+      "Одноразова бритва",
+      "Зубна щітка",
+      "Зубна паста",
+      "Крем (для обличчя, для тіла)",
+      "Антиперспірант",
+      "Духи",
+      "Макіяжний набір",
+      "Щоденні прокладки",
+      "Ватні диски"
+    ]
+  },
+  medicine: {
+    "Основна аптека": [
+      "Жаропонижуюче для дитини (Нурофен суспензія або Панадол)",
+      "Жаропонижуюче для дорослих (ібупрофен / парацетамол)",
+      "Засіб від діареї (Смекта для дитини, Лоперамід для дорослих)",
+      "Пробіотики (Лактіале або аналог)",
+      "Антигістамін (Цетрин / Лоратадин — від алергії та укусів)",
+      "Краплі від болю у вухах (після плавання)",
+      "Пластир та бинт",
+      "Антисептик (хлоргексидин або йод)",
+      "Сонцезахисний крем SPF 50+",
+      "Крем після загару (Пантенол)",
+      "Знеболювальні",
+      "Ліки Соломії (з запасом)"
+    ]
+  },
+  baby: {
+    "Харчування та гігієна": [
+      "Їжа для Ромчика (пюре, рибки, зіпки, снеки)",
+      "Пляшечки на воду (+ запасна)",
+      "Панамка / кепка від сонця",
+      "Легкий сонцезахисний костюм для пляжу",
+      "Підгузники (водні та звичайні)",
+      "Вологі серветки (кілька упаковок)",
+      "Дитячий шампунь та гель",
+      "Дитячий антисептичний гель для рук"
+    ],
+    "На виїзд / різне": [
+      "Коляска (легка, складна)",
+      "Рюкзак-переноска",
+      "Іграшки та книжечки",
+      "Перекус і пляшка з водою в дорогу",
+      "Іграшки Маркові"
+    ]
+  },
+  beach: {
+    "Пляж та басейн": [
+      "Пляжний рушник (наш комплект)",
+      "Надувний круг",
+      "Нарукавники надувні для Ромчика",
+      "Водонепроникна сумка для телефону",
+      "Пляжна сумка",
+      "Пляжний килимок"
+    ]
+  },
+  gadgets: {
+    "Техніка": [
+      "Зарядні кабелі (телефони, годинник, навушники)",
+      "Відео-няня",
+      "Селфі палка",
+      "Павербанк",
+      "Навушники"
+    ]
+  }
+};
+
+const TIPS = [
+  "🛫 Прибудьте в аеропорт мінімум за 2,5 години з дитиною — черги на реєстрацію та security займають більше часу.",
+  "🌡 Туреччина в червні — 35–40°C. Уникайте пляжу між 12:00 та 16:00 — небезпечно для Ромчика.",
+  "🧃 Пийте лише воду з пляшок або готельну. Дитині — особливо важливо.",
+  "🍨 All-inclusive: одразу уточніть на reception дитяче меню, ліжечко, дитячий клуб та аніматорів.",
+  "🏥 Якщо у дитини температура за кордоном — не панікуйте. Готельний лікар є або легко викликається.",
+  "📱 Збережіть офлайн-карту Google Maps для свого регіону (Антaлія).",
+  "🧴 Крем SPF 50+ наносіть дитині за 20 хв до виходу, повторюйте кожні 1,5–2 год.",
+  "🤲 Мийте руки, не їжте на пляжі продукти зі стихійних лотків.",
+  "✈️ На борту: підгузники, снеки, пляшечка та іграшки — у ручний багаж.",
+  "🇹🇷 Перевірте умови роумінгу або купіть турецьку SIM в аеропорту Анталії."
+];
+
+// ─── State ──────────────────────────────────────────────────────
+const STORAGE_KEY = 'turkey2026';
+
+function loadState() {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved) return JSON.parse(saved);
+  } catch {}
+  // first load: copy default data, all unchecked
+  const state = { data: {}, checked: {} };
+  for (const sec of Object.keys(DEFAULT_DATA)) {
+    state.data[sec] = {};
+    state.checked[sec] = {};
+    for (const [cat, items] of Object.entries(DEFAULT_DATA[sec])) {
+      state.data[sec][cat] = [...items];
+      state.checked[sec][cat] = items.map(() => false);
+    }
+  }
+  return state;
+}
+
+function saveState() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(appState));
+}
+
+let appState = loadState();
+
+// ─── Render ─────────────────────────────────────────────────────
+const SECTIONS = ['docs','clothes','cosmetics','medicine','baby','beach','gadgets'];
+
+function render(secId) {
+  const el = document.getElementById(secId);
+  const cats = appState.data[secId];
+  if (!cats) return;
+
+  let html = '';
+  for (const cat of Object.keys(cats)) {
+    const items = cats[cat];
+    const checked = appState.checked[secId][cat] || [];
+    html += `<div class="cat-header">${cat}</div>`;
+    if (items.length === 0) {
+      html += `<div class="empty">Список порожній</div>`;
+    }
+    items.forEach((text, i) => {
+      const done = checked[i] ? ' done' : '';
+      const uid = `${secId}|${encodeURIComponent(cat)}|${i}`;
+      html += `<div class="item${done}" onclick="toggle('${uid}')">
+        <div class="checkbox"></div>
+        <label>${escHtml(text)}</label>
+        <button class="del-btn" onclick="event.stopPropagation();del('${uid}')" title="Видалити">×</button>
+      </div>`;
+    });
+  }
+
+  // add row
+  const opts = Object.keys(cats).map(c => `<option value="${escHtml(c)}">${escHtml(c)}</option>`).join('');
+  html += `<div class="add-row">
+    <select id="sel-${secId}">${opts}</select>
+    <input id="inp-${secId}" type="text" placeholder="Додати пункт..." onkeydown="if(event.key==='Enter')addItem('${secId}')">
+    <button onclick="addItem('${secId}')">+ Додати</button>
+  </div>`;
+
+  el.innerHTML = html;
+}
+
+function renderTips() {
+  document.getElementById('tips').innerHTML = TIPS.map(t => `<div class="tip">${t}</div>`).join('');
+}
+
+function renderAll() {
+  SECTIONS.forEach(render);
+  renderTips();
+  updateProgress();
+}
+
+// ─── Actions ────────────────────────────────────────────────────
+function toggle(uid) {
+  const [sec, catEnc, idx] = uid.split('|');
+  const cat = decodeURIComponent(catEnc);
+  const i = parseInt(idx);
+  if (!appState.checked[sec]) appState.checked[sec] = {};
+  if (!appState.checked[sec][cat]) appState.checked[sec][cat] = [];
+  appState.checked[sec][cat][i] = !appState.checked[sec][cat][i];
+  saveState();
+  render(sec);
+  updateProgress();
+}
+
+function del(uid) {
+  const [sec, catEnc, idx] = uid.split('|');
+  const cat = decodeURIComponent(catEnc);
+  const i = parseInt(idx);
+  appState.data[sec][cat].splice(i, 1);
+  appState.checked[sec][cat].splice(i, 1);
+  saveState();
+  render(sec);
+  updateProgress();
+}
+
+function addItem(secId) {
+  const inp = document.getElementById('inp-' + secId);
+  const sel = document.getElementById('sel-' + secId);
+  const text = inp.value.trim();
+  if (!text) { inp.focus(); return; }
+  const cat = sel.value;
+  if (!appState.data[secId][cat]) appState.data[secId][cat] = [];
+  if (!appState.checked[secId][cat]) appState.checked[secId][cat] = [];
+  appState.data[secId][cat].push(text);
+  appState.checked[secId][cat].push(false);
+  saveState();
+  inp.value = '';
+  render(secId);
+  updateProgress();
+  inp.focus();
+}
+
+// ─── Tabs ────────────────────────────────────────────────────────
+document.querySelectorAll('.tab').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const sec = btn.dataset.section;
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.getElementById(sec).classList.add('active');
+    btn.classList.add('active');
+  });
+});
+
+// ─── Progress ────────────────────────────────────────────────────
+function updateProgress() {
+  let total = 0, done = 0;
+  for (const sec of SECTIONS) {
+    const cats = appState.data[sec] || {};
+    for (const cat of Object.keys(cats)) {
+      const items = cats[cat];
+      const checks = appState.checked[sec]?.[cat] || [];
+      total += items.length;
+      done += checks.filter(Boolean).length;
+    }
+  }
+  const pct = total ? Math.round(done / total * 100) : 0;
+  document.getElementById('prog-label').textContent = `Зібрано: ${done} / ${total}`;
+  document.getElementById('prog-pct').textContent = `${pct}%`;
+  document.getElementById('prog-fill').style.width = pct + '%';
+}
+
+// ─── Utils ───────────────────────────────────────────────────────
+function escHtml(str) {
+  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// ─── Reset (hold Shift + click logo) ─────────────────────────────
+document.querySelector('header').addEventListener('click', e => {
+  if (e.shiftKey && confirm('Скинути всі позначки? (список збережеться)')) {
+    for (const sec of SECTIONS) {
+      for (const cat of Object.keys(appState.checked[sec] || {})) {
+        appState.checked[sec][cat] = appState.checked[sec][cat].map(() => false);
+      }
+    }
+    saveState();
+    renderAll();
+  }
+});
+
+// ─── Init ────────────────────────────────────────────────────────
+renderAll();
+</script>
+</body>
+</html>
